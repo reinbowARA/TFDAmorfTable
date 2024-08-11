@@ -1,0 +1,28 @@
+html{
+    margin: 0;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 64px;
+
+}
+
+table {
+    max-height: 100px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 50%;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 8px;
+}
+
+th {
+    background-color: #f2f2f2;
+}

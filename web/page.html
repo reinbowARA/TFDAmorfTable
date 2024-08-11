@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/style/style.css">
+    <title>Таблица аморфных материалов</title>
+</head>
+
+<body>
+    <br>
+    <table>
+        <thead>
+            <tr>
+                <th rowspan="2">Наследники</th>
+                <th rowspan="2">Части наследника</th>
+                <th colspan="7">Аморфы при шансе дропа</th>
+            </tr>
+            <tr>
+                <td>3%</td>
+                <td>6%</td>
+                <td>10%</td>
+                <td>15%</td>
+                <td>20%</td>
+                <td>32%</td>
+                <td>38%</td>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- <tr>
+                <td rowspan="4">Аякс</td>
+                <td>Код</td>
+                <td>---</td>
+                <td>019!</td>
+                <td>096</td>
+                <td>---</td>
+                <td>075*<br>103*</td>
+                <td>---</td>
+                <td>---</td>
+            </tr>-->
+            {{ range $index, $item := .Data }}
+            <tr>
+                {{ range $rowIndex, $row := $item }}
+                {{ if eq $rowIndex 0 }}
+                {{ if ne $row ""}}
+                <th rowspan="4">{{$row}}</th>
+                {{end}}
+                {{else}}
+                <td> {{$row}}</td>
+                {{end}}
+                {{ end }}
+            </tr>
+            {{ end }}
+        </tbody>
+    </table>
+</body>
+
+</html>
