@@ -4,6 +4,7 @@ import (
 	"TFDAmorfTable/handler"
 	"encoding/json"
 	"log"
+	"net/http"
 	"os"
 
 	"github.com/gin-gonic/gin"
@@ -28,8 +29,11 @@ func main() {
 
 	router.LoadHTMLGlob("web/page.html")
 
-	router.GET("/", srv.GetTable)
-
+	//router.POST("/switch", srv.CheckSwitch)
+	router.GET("/:object", srv.GetTable)
+	router.GET("/", func(ctx *gin.Context) {
+		ctx.Redirect(http.StatusMovedPermanently, "/descdendants")
+	})
 	log.Println("server start")
 	err = router.Run()
 	if err != nil {

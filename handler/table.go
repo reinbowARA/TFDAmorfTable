@@ -12,10 +12,29 @@ import (
 
 func (s *Server) GetTable(c *gin.Context) {
 
-	nameSheet := "Наследники" // @todo add switch
+	nameSheetEN := c.Param("object")
+	var nameSheet string
+
+	var ColumnName struct{
+		Title string 
+		PartTitle string
+		Data [][]string
+	}
+
+	switch nameSheetEN {
+	case "descendants":
+		nameSheet = "Наследники"
+		ColumnName.Title = nameSheet
+		ColumnName.PartTitle = "Части наследника"
+	case "weapons":
+		nameSheet = "Оружия"
+		ColumnName.Title = nameSheet
+		ColumnName.PartTitle = "Части оружия"
+	}
 	resp, err := http.Get(fmt.Sprintf("https://sheets.googleapis.com/v4/spreadsheets/%s/values/'%s'!A:I?majorDimension=ROWS&key=%s", s.GoogleTable.TableID, nameSheet, s.GoogleTable.Token))
 	if err != nil {
 		log.Println(err.Error())
+		c.JSON(http.StatusInternalServerError, gin.H{"error":"Google API dead"})
 		return
 	}
 	body, _ := io.ReadAll(resp.Body)
@@ -59,13 +78,15 @@ func (s *Server) GetTable(c *gin.Context) {
 		}
 		result = append(result, data)
 	}
-
+	ColumnName.Data = result[2:]
 	/*data := []Person{
 		{"Alice", 30, "Moscow"}, {"Roman", 18, "Belorus"}, {"Mario", 25, "Rim"},
 	}
 	*/
 	c.HTML(200, "page.html", gin.H{
-		"Title": "Person Information",
-		"Data":  result[2:],
+		"Title": ColumnName.Title,
+		"PartTitle" : ColumnName.PartTitle,
+		"Data":  ColumnName.Data,
 	})
 }
+
