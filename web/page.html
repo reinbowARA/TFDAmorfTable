@@ -7,14 +7,44 @@
     <link rel="stylesheet" href="static/style/style.css">
     <title>Таблица аморфных материалов</title>
 </head>
+<script>
+
+    function SwitchURL() {
+        console.log(localStorage.getItem('checkboxState'))
+        if (localStorage.getItem('checkboxState') !== null) {
+            const isCheked = localStorage.getItem('checkboxState')
+            checkbox.checked = ischeked
+            if (isCheked) {
+                window.location.href = "/weapons";
+            } else {
+                window.location.href = "/descendants";
+            }
+        } else {
+            document.getElementById("toggleSwitch").addEventListener('change', function () {
+                localStorage.setItem('checkboxState', this.checked)
+                if (this.checked) {
+                    window.location.href = "/weapons";
+                } else {
+                    window.location.href = "/descendants";
+                }
+            });
+        }
+    }
+
+</script>
+<header>
+    <label class="switch">
+        <input type="checkbox" id="toggleSwitch" onclick="SwitchURL()">
+        <span class="slider round"></span>
+    </label>
+</header>
 
 <body>
-    <br>
-    <table>
+    <table style="background-color: white;">
         <thead>
             <tr>
-                <th rowspan="2">Наследники</th>
-                <th rowspan="2">Части наследника</th>
+                <th rowspan="2">{{.Title}}</th>
+                <th rowspan="2">{{.PartTitle}}</th>
                 <th colspan="7">Аморфы при шансе дропа</th>
             </tr>
             <tr>
@@ -28,17 +58,6 @@
             </tr>
         </thead>
         <tbody>
-            <!-- <tr>
-                <td rowspan="4">Аякс</td>
-                <td>Код</td>
-                <td>---</td>
-                <td>019!</td>
-                <td>096</td>
-                <td>---</td>
-                <td>075*<br>103*</td>
-                <td>---</td>
-                <td>---</td>
-            </tr>-->
             {{ range $index, $item := .Data }}
             <tr>
                 {{ range $rowIndex, $row := $item }}
