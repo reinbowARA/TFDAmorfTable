@@ -29,13 +29,12 @@ func main() {
 
 	router.LoadHTMLGlob("web/page.html")
 
-	//router.POST("/switch", srv.CheckSwitch)
 	router.GET("/:object", srv.GetTable)
 	router.GET("/", func(ctx *gin.Context) {
-		ctx.Redirect(http.StatusMovedPermanently, "/descdendants")
+		ctx.Redirect(http.StatusMovedPermanently, "/descendants")
 	})
 	log.Println("server start")
-	err = router.Run()
+	err = router.Run(":8080")
 	if err != nil {
 		log.Fatal(err)
 	}

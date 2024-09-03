@@ -15,10 +15,10 @@ func (s *Server) GetTable(c *gin.Context) {
 	nameSheetEN := c.Param("object")
 	var nameSheet string
 
-	var ColumnName struct{
-		Title string 
+	var ColumnName struct {
+		Title     string
 		PartTitle string
-		Data [][]string
+		Data      [][]string
 	}
 
 	switch nameSheetEN {
@@ -30,11 +30,14 @@ func (s *Server) GetTable(c *gin.Context) {
 		nameSheet = "Оружия"
 		ColumnName.Title = nameSheet
 		ColumnName.PartTitle = "Части оружия"
+	default:
+		c.JSON(http.StatusBadRequest, gin.H{"message": "query not exist"})
+		return
 	}
 	resp, err := http.Get(fmt.Sprintf("https://sheets.googleapis.com/v4/spreadsheets/%s/values/'%s'!A:I?majorDimension=ROWS&key=%s", s.GoogleTable.TableID, nameSheet, s.GoogleTable.Token))
 	if err != nil {
 		log.Println(err.Error())
-		c.JSON(http.StatusInternalServerError, gin.H{"error":"Google API dead"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Google API dead"})
 		return
 	}
 	body, _ := io.ReadAll(resp.Body)
@@ -84,9 +87,8 @@ func (s *Server) GetTable(c *gin.Context) {
 	}
 	*/
 	c.HTML(200, "page.html", gin.H{
-		"Title": ColumnName.Title,
-		"PartTitle" : ColumnName.PartTitle,
-		"Data":  ColumnName.Data,
+		"Title":     ColumnName.Title,
+		"PartTitle": ColumnName.PartTitle,
+		"Data":      ColumnName.Data,
 	})
 }
-
