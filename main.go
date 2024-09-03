@@ -15,7 +15,7 @@ func main() {
 
 	file, err := os.ReadFile("configs/secrets.json")
 	if err != nil {
-		log.Println(err.Error())
+		log.Fatalf("Error reading gonfig file: %s", err.Error())
 		return
 	}
 	srv.GoogleTable = &handler.DataSecret{}
