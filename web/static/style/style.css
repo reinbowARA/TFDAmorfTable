@@ -10,7 +10,9 @@ header {
     display: flex;
     position: relative;
     flex-direction: row;
-    width: 74px;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
     height: 36px;
     top: -16px;
 }
