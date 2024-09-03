@@ -7,39 +7,24 @@
     <link rel="stylesheet" href="static/style/style.css">
     <title>Таблица аморфных материалов</title>
 </head>
-<script>
-
-    function SwitchURL() {
-        console.log(localStorage.getItem('checkboxState'))
-        if (localStorage.getItem('checkboxState') !== null) {
-            const isCheked = localStorage.getItem('checkboxState')
-            checkbox.checked = ischeked
-            if (isCheked) {
-                window.location.href = "/weapons";
-            } else {
-                window.location.href = "/descendants";
-            }
-        } else {
-            document.getElementById("toggleSwitch").addEventListener('change', function () {
-                localStorage.setItem('checkboxState', this.checked)
-                if (this.checked) {
-                    window.location.href = "/weapons";
-                } else {
-                    window.location.href = "/descendants";
-                }
-            });
-        }
-    }
-
-</script>
-<header>
-    <label class="switch">
-        <input type="checkbox" id="toggleSwitch" onclick="SwitchURL()">
-        <span class="slider round"></span>
-    </label>
-</header>
 
 <body>
+
+    <header>
+        <!--switcher-->
+        <div class="toggle-button-cover">
+            <div class="button-cover">
+                <div class="button b2" id="button-10">
+                    <input type="checkbox" class="checkbox" id="button" onclick="save()" />
+                    <div class="knobs">
+                        <span>Наследники</span>
+                    </div>
+                    <div class="layer"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
     <table style="background-color: white;">
         <thead>
             <tr>
@@ -74,5 +59,27 @@
         </tbody>
     </table>
 </body>
+
+<script>
+    load()
+    function save() {
+        var checkbox = document.getElementById('button');
+        localStorage.setItem('button-save', checkbox.checked);
+
+        if (checkbox.checked) {
+            window.location.href = "/weapons";
+        } else {
+            window.location.href = "/descendants";
+        }
+    }
+    function load() {
+        var ischecked = localStorage.getItem('button-save');
+        if (ischecked === 'true') {
+            document.getElementById("button").checked = true;
+        } else {
+            document.getElementById("button").checked = false;
+        }
+    }
+</script>
 
 </html>

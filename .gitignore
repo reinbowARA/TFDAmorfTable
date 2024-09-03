@@ -21,6 +21,7 @@
 go.work
 go.work.sum
 configs/*
+.vscode/*
 
 # env file
 .env
